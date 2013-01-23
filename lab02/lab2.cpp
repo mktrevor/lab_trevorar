@@ -28,7 +28,35 @@ Item::Item()
 }
 
 // Complete the Item class methods here
+Item::Item(string name, int qty, double price) {
+	name_ = name;
+	qty_ = qty;
+	price_ = price;
+}
 
+string Item::getName() const {
+	return name_;
+}
+
+int Item::getQty() const {
+	return qty_;
+}
+
+double Item::getPrice() const {
+	return price_;
+}
+
+void Item::setName(string name) {
+	name_ = name;
+}
+
+void Item::setQty(int qty) {
+	qty_ = qty;
+}
+
+void Item::setPrice(double price) {
+	price_ = price;
+}
 
 // Prototypes
 void printItems(const Item *items, const int len);
@@ -67,6 +95,6 @@ void printItems(const Item *items, int len)
 //  argument.
 Item *readData(const char *filename, int &len)
 {
- 
+
   return NULL;
 }
