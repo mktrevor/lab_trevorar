@@ -86,7 +86,14 @@ int main(int argc, char *argv[])
 // Print Item information in a tabular format
 void printItems(const Item *items, int len)
 {
+	cout << setw(15) << "Name" << setw(10) << "Qty" << setw(10) << "Price" << endl;
 
+	for(int i = 0; i < len; i++) {
+		cout << setw(15) << items[i].getName();
+		cout << setw(10) << items[i].getQty();
+		double price = items[i].getPrice();
+		cout << setw(10) << setprecision (2) << fixed << price << endl;
+	}
 }
 
 
@@ -95,6 +102,27 @@ void printItems(const Item *items, int len)
 //  argument.
 Item *readData(const char *filename, int &len)
 {
-
-  return NULL;
+	ifstream inputFile;
+	inputFile.open(filename);
+	if(!inputFile.is_open()) {
+		return NULL;
+	}
+	inputFile >> len;
+	
+	Item *items = new Item[len];
+	
+	for(int i = 0; i < len; i++) {
+		string name;
+		inputFile >> name;
+		int qty;
+		inputFile >> qty;
+		double price;
+		inputFile >> price;
+		
+		items[i].setName(name);
+		items[i].setQty(qty);
+		items[i].setPrice(price);
+	}
+	
+  return items;
 }
