@@ -91,8 +91,7 @@ void printItems(const Item *items, int len)
 	for(int i = 0; i < len; i++) {
 		cout << setw(15) << items[i].getName();
 		cout << setw(10) << items[i].getQty();
-		double price = items[i].getPrice();
-		cout << setw(10) << setprecision (2) << fixed << price << endl;
+		cout << setw(10) << setprecision (2) << fixed << items[i].getPrice() << endl;
 	}
 }
 
