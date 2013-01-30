@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -58,6 +59,7 @@ template <typename T> T List<T>::at(int loc) {
 class User{
 	public:
 		User();
+		User(string name, int age, int friendListSize);
 		~User();
 		
 		string getName();
@@ -75,15 +77,16 @@ class User{
 };
 
 User::User() {
-	int userInput = 0;
-	cout << "Please enter a capacity for your friends list: ";
-	cin >> userInput;
-
 	name_ = "";
 	age_ = 0;
-	friends = new List<string>(userInput);
+	friends = new List<string>(10);
 };
 
+User::User(string name, int age, int friendListSize) {
+	name_ = name;
+	age_ = age;
+	friends = new List<string>(friendListSize);
+}
 string User::getName() {
 	return name_;
 };
@@ -112,5 +115,48 @@ void User::addFriend(string name) {
 /*********************************************************************/
 
 int main() {
+	vector<User*> userList;
+	
+	cout << "Please enter a name and an age (separated by a space) for as many users as you would like." << endl;
+	cout << "Enter 'done' when you've finished." << endl;
+	
+	while(true) {
+		string name = "";
+		int age = 0;
+		
+		cin >> name;
+		
+		if(name == "done") {
+			break;
+		}
+		
+		cin >> age;
+		
+		User* user = new User(name, age, 10);
+		
+		userList.push_back(user);
+	}
+
+	cout << "Good. Now, enter two names at a time and the second will be added to the first's friends list." << endl;
+	cout << "Enter 'done' when you've finished." << endl;
+	
+	while(true) {
+		string name1 = "";
+		string name2 = "";
+		
+		cin >> name1;
+		
+		if(name1 == "done") {
+			break;
+		}
+		
+		cin >> name2;
+		
+		for(int i = 0; i < userList.size(); i++) {
+			if(userList[i]->getName() == name1) {
+				userList[i]->addFriend(name2);
+			}
+		}
+	}
 	return 0;
 }
