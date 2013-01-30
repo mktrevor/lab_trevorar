@@ -11,7 +11,6 @@ using namespace std;
 template <typename T> class List{
 	public:
 		List();
-		List(int c);
 		~List();
 		int getSize();
 		void push_back(T item);
@@ -25,15 +24,13 @@ template <typename T> class List{
 
 template <typename T> List<T>::List() {
 	size = 0;
-	capacity = 20;
-	data_ = new T[10];
+	capacity = 2;
+	data_ = new T[2];	
 };
 
-template <typename T> List<T>::List(int c) {
-	size = 0;
-	capacity = c;
-	data_ = new T[c];
-};
+template <typename T> List<T>::~List() {
+	delete [] data_;
+}
 
 template <typename T> int List<T>::getSize() {
 	return size;
@@ -41,7 +38,18 @@ template <typename T> int List<T>::getSize() {
 
 template <typename T> void List<T>::push_back(T item) {
 	if(size == capacity) {
-		cout << "Sorry, this array is full." << endl;
+		T* newData = new T[size*2];
+		
+		for(int i = 0; i < size; i++) {
+			newData[i] = data_[i];
+		}
+		
+		delete [] data_;
+		
+		data_ = newData;
+		
+		capacity *= 2;
+		
 		return;
 	}
 	
@@ -59,7 +67,7 @@ template <typename T> T List<T>::at(int loc) {
 class User{
 	public:
 		User();
-		User(string name, int age, int friendListSize);
+		User(string name, int age);
 		~User();
 		
 		string getName();
@@ -81,17 +89,21 @@ class User{
 User::User() {
 	name_ = "";
 	age_ = 0;
-	friends = new List<string>(10);
+	friends = new List<string>;
 };
 
-User::User(string name, int age, int friendListSize) {
+User::User(string name, int age) {
 	name_ = name;
 	age_ = age;
-	friends = new List<string>(friendListSize);
+	friends = new List<string>;
 }
 string User::getName() {
 	return name_;
 };
+
+User::~User() {
+	delete friends;
+}
 
 int User::getAge() {
 	return age_;
@@ -144,7 +156,7 @@ int main() {
 		
 		cin >> age;
 		
-		User* user = new User(name, age, 10);
+		User* user = new User(name, age);
 		
 		userList.push_back(user);
 	}
