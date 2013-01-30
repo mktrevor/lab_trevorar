@@ -70,6 +70,8 @@ class User{
 		void setAge(int age);
 		void addFriend(string name);
 		
+		void printUser();
+		
 	private:
 		string name_;
 		int age_;
@@ -111,6 +113,16 @@ void User::addFriend(string name) {
 	friends->push_back(name);
 };
 
+void User::printUser() {
+	cout << "User name: " << name_ << endl;
+	cout << "User age: " << age_ << endl;
+	cout << "User friends: ";
+	for(int i = 0; i < friends->getSize(); i++) {
+		cout << getFriend(i) << " ";
+	}
+	cout << endl;
+};
+	
 //Main function starts here.
 /*********************************************************************/
 
@@ -118,7 +130,7 @@ int main() {
 	vector<User*> userList;
 	
 	cout << "Please enter a name and an age (separated by a space) for as many users as you would like." << endl;
-	cout << "Enter 'done' when you've finished." << endl;
+	cout << "Enter 'done' when you've finished." << endl << endl;
 	
 	while(true) {
 		string name = "";
@@ -137,8 +149,9 @@ int main() {
 		userList.push_back(user);
 	}
 
+	cout << endl << endl;
 	cout << "Good. Now, enter two names at a time and the second will be added to the first's friends list." << endl;
-	cout << "Enter 'done' when you've finished." << endl;
+	cout << "Enter 'done' when you've finished." << endl << endl;
 	
 	while(true) {
 		string name1 = "";
@@ -158,5 +171,13 @@ int main() {
 			}
 		}
 	}
+	
+	cout << endl << "USERS" << endl;	
+		
+	for(int i = 0; i < userList.size(); i++) {
+		cout << "--------------------" << endl;
+		userList[i]->printUser();
+	}
+	
 	return 0;
 }
