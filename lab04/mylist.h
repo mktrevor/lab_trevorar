@@ -1,13 +1,15 @@
+#ifndef MYLIST_H
+#define MYLIST_H
+
 #include <iostream>
 #include <string>
-#include <vector>
 
 using namespace std;
 
-template <typename T> class List{
+template <typename T> class MyList{
 	public:
-		List();
-		~List();
+		MyList();
+		~MyList();
 		int getSize();
 		void push_back(T item);
 		T at(int loc);
@@ -18,21 +20,21 @@ template <typename T> class List{
 		int capacity;
 };
 
-template <typename T> List<T>::List() {
+template <typename T> MyList<T>::MyList() {
 	size = 0;
 	capacity = 2;
-	data_ = new T[2];	
+	data_ = new T[2];
 };
 
-template <typename T> List<T>::~List() {
+template <typename T> MyList<T>::~MyList() {
 	delete [] data_;
 }
 
-template <typename T> int List<T>::getSize() {
+template <typename T> int MyList<T>::getSize() {
 	return size;
 }
 
-template <typename T> void List<T>::push_back(T item) {
+template <typename T> void MyList<T>::push_back(T item) {
 	if(size == capacity) {
 		T* newData = new T[size*2];
 		
@@ -53,6 +55,8 @@ template <typename T> void List<T>::push_back(T item) {
 	size++;
 }
 
-template <typename T> T List<T>::at(int loc) {
+template <typename T> T MyList<T>::at(int loc) {
 	return data_[loc];
 }
+
+#endif
