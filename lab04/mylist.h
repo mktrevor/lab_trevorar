@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <stdexcept>
+#include <bitset>
 
 using namespace std;
 
@@ -13,6 +15,8 @@ template <typename T> class MyList{
 		int getSize();
 		void push_back(T item);
 		T at(int loc);
+		bool remove(T val);
+		T pop(int loc);
 	
 	private:
 		T* data_;
@@ -48,6 +52,10 @@ template <typename T> void MyList<T>::push_back(T item) {
 		
 		capacity *= 2;
 		
+		data_[size] = item;
+		
+		size++;
+		
 		return;
 	}
 	
@@ -56,7 +64,39 @@ template <typename T> void MyList<T>::push_back(T item) {
 }
 
 template <typename T> T MyList<T>::at(int loc) {
+
+	if(loc < 0 || loc >= size) {
+		throw invalid_argument("Trying to perform at() at invalid location");
+	}
+
 	return data_[loc];
+}
+
+template <typename T> bool MyList<T>::remove(T val) {
+	for(int i = 0; i < size; i++) {
+		if(data_[i] == val) {
+			for(int j = i; j < size; j++) {
+				data_[j] = data_[j+1];
+			}
+			size--;
+			return 1;
+		}
+	}
+	return 0;
+}
+
+template <typename T> T MyList<T>::pop(int loc) {
+	
+	if(loc < 0 || loc >= size) {
+		throw invalid_argument("Trying to perform pop() at invalid location");
+	}
+	
+	T temp = data_[loc];
+	for(int i = loc; i < size; i++) {
+		data_[i] = data_[i+1];
+	}
+	size--;
+	return temp;
 }
 
 #endif
