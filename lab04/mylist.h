@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
-#include <bitset>
 
 using namespace std;
 
@@ -14,9 +13,10 @@ template <typename T> class MyList{
 		~MyList();
 		int getSize();
 		void push_back(T item);
-		T at(int loc);
+		T& at(int loc);
 		bool remove(T val);
 		T pop(int loc);
+		T& operator[](int loc);
 	
 	private:
 		T* data_;
@@ -63,7 +63,7 @@ template <typename T> void MyList<T>::push_back(T item) {
 	size++;
 }
 
-template <typename T> T MyList<T>::at(int loc) {
+template <typename T> T& MyList<T>::at(int loc) {
 
 	if(loc < 0 || loc >= size) {
 		throw invalid_argument("Trying to perform at() at invalid location");
@@ -99,4 +99,11 @@ template <typename T> T MyList<T>::pop(int loc) {
 	return temp;
 }
 
+template <typename T> T& MyList<T>::operator[](int loc) {
+	if(loc < 0 || loc >= size) {
+		throw invalid_argument("Trying to perform [] at invalid location");
+	}
+
+	return data_[loc];
+}
 #endif

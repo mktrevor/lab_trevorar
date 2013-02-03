@@ -13,7 +13,11 @@ int main() {
 		i++;
 	}
 	
-	MyList<string> stringList;
+	intList[0] = 5;
+	
+	cout << intList[0] << endl;
+	
+	/*MyList<string> stringList;
 	
 	stringList.push_back("trevor");
 	stringList.push_back("dog");
@@ -21,24 +25,17 @@ int main() {
 	stringList.push_back("sun");
 	stringList.push_back("moon");
 	
-	
-	stringList.remove("trevor");
-	intList.remove(10);
-	
 	try {
-		stringList.pop(1);
-		intList.pop(2);
-	
 		for(int i = 0; i < intList.getSize(); i++) {
-			cout << intList.at(i) << endl;
+			cout << intList[i] << endl;
 		}
 		for(int i = 0; i < stringList.getSize(); i++) {
-			cout << stringList.at(i) << endl;
+			cout << stringList[i] << endl;
 		}
 	}
 	catch(invalid_argument ia) {
 		cout << ia.what() << endl;
-	}
+	}*/
 	
 	return 0;
 }
