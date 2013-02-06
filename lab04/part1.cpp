@@ -21,9 +21,6 @@ int main() {
 	stringList.push_back("sun");
 	stringList.push_back("moon");
 	
-	stringList.remove("trevor");
-	intList.remove(10);
-	
 	for(int i = 0; i < intList.getSize(); i++) {
 			cout << intList.at(i) << endl;
 	}
