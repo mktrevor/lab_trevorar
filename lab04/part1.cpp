@@ -1,6 +1,7 @@
 #include "mylist.h"
 #include <iostream>
 #include <string>
+#include <stdexcept>
 
 using namespace std;
 
@@ -14,11 +15,20 @@ int main() {
 	
 	MyList<string> stringList;
 	
-	for(int i = 0; i < 4; i++) {
-		string word = "";
-		cout << "Enter a word" << endl;
-		cin >> word;
-		stringList.push_back(word);
+	stringList.push_back("trevor");
+	stringList.push_back("dog");
+	stringList.push_back("cat");
+	stringList.push_back("sun");
+	stringList.push_back("moon");
+	
+	stringList.remove("trevor");
+	intList.remove(10);
+	
+	for(int i = 0; i < intList.getSize(); i++) {
+			cout << intList.at(i) << endl;
+	}
+	for(int i = 0; i < stringList.getSize(); i++) {
+			cout << stringList.at(i) << endl;
 	}
 	
 	return 0;
