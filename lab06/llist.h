@@ -1,6 +1,10 @@
 #ifndef LLIST_H
 #define LLIST_H
 
+#include <iostream>
+
+using namespace std;
+
 template <typename T>
 struct Item {
   T val;
@@ -20,6 +24,7 @@ class LList {
   T& at(int loc) const;
   T& operator[](int loc) const;
   bool remove(const T& val);
+  void insert(int loc, int val);
   void clear();
  private:
   Item<T> *getNodeAt(int loc) const;
@@ -46,7 +51,7 @@ LList<T>::LList()
 template <typename T>
 LList<T>::~LList()
 {
-  clear();
+	clear();
 }
 
 
@@ -139,10 +144,6 @@ bool LList<T>::remove(const T& val)
 template <typename T>
 T& LList<T>::at(int loc) const
 {
-	/*Item<T>* temp = head_;
-	for(int i = 0; i < loc; i++) {
-		temp = temp->next;
-	}*/
 	return getNodeAt(loc)->val;
 }
 
@@ -153,6 +154,45 @@ T& LList<T>::operator[](int loc) const
 }
 
 template <typename T>
+void LList<T>::insert(int loc, int val){
+
+	if(loc > size_) {
+		cout << "Error: Trying to insert outside of list." << endl;
+		return;
+	}
+
+	Item<T>* temp = head_;
+	Item<T>* trailer;
+	
+	Item<T>* newItem = new Item<T>;
+	newItem->val = val;
+	newItem->next = NULL;
+	
+	if(loc == 0) {
+		if(head_ == NULL) {
+			head_ = newItem;
+			size_++;
+			return;
+		}
+		newItem->next = temp;
+		head_ = newItem;
+		size_++;
+		return;
+	}
+	
+	for(int i = 0; i < loc; i++) {
+		trailer = temp;
+		temp = temp->next;
+	}
+	newItem->next = temp;
+	trailer->next = newItem;
+	
+	size_++;
+	
+	return;
+};
+
+template <typename T>
 void LList<T>::clear()
 {
   while(head_ != NULL){
@@ -161,6 +201,5 @@ void LList<T>::clear()
     head_ = temp;
   }
 }
-
 
 #endif
