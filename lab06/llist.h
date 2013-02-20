@@ -139,11 +139,11 @@ bool LList<T>::remove(const T& val)
 template <typename T>
 T& LList<T>::at(int loc) const
 {
-	Item<T>* temp = head_;
+	/*Item<T>* temp = head_;
 	for(int i = 0; i < loc; i++) {
 		temp = temp->next;
-	}
-	return temp->val;
+	}*/
+	return getNodeAt(loc)->val;
 }
 
 template <typename T>
