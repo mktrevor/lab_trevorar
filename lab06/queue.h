@@ -36,6 +36,10 @@ void Queue<T>::push_back(const T& value) {
 
 template <typename T>
 void Queue<T>::pop_front() {
+	if(size() == 0) {
+		cout << "ERROR: Trying to pop empty queue." << endl;
+		return;
+	}
 	LList<T>::pop_front();
 }
 

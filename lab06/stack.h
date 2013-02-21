@@ -35,6 +35,10 @@ void Stack<T>::push(const T& val) {
 
 template <typename T>
 void Stack<T>::pop() {
+	if(size() == 0) {
+		cout << "ERROR: Trying to pop empty stack." << endl;
+		return;
+	}
 	LList<T>::pop_front();
 	return;
 }
