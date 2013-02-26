@@ -25,6 +25,42 @@ private:
   double _b, _h;
 };
 
+class Rectangle : public Shape
+{
+	public:
+		Rectangle(double b, double h) : _b(b), _h(h) { }
+		~Rectangle() { }
+		double getArea() { return _b*_h; }
+		double getPerimeter() { return 2*_b + 2*_h; }
+		string getType() { return "Rectangle"; }
+	private:
+		double _b, _h;
+};
+
+class Circle : public Shape
+{
+	public:
+		Circle(double r) : _r(r) { }
+		~Circle() { }
+		double getArea() { return 3.14159*(_r*_r); }
+		double getPerimeter() { return 2*3.14159*_r; }
+		string getType() { return "Circle"; }
+	private:
+		double _r;
+};
+
+class Square : public Shape
+{
+	public:
+		Square(double l) : _l(l) { }
+		~Square() { }
+		double getArea() { return _l*_l; }
+		double getPerimeter() { return 4*_l; }
+		string getType() { return "Square"; }
+	private:
+		double _l;
+};
+
 
 int main()
 {
