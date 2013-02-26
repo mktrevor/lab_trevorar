@@ -64,6 +64,8 @@ class Square : public Shape
 
 int main()
 {
+	//Shape myShape;
+	
   vector<Shape *> shapeList;
 
   int selection = -1;
