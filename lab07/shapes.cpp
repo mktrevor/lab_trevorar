@@ -52,13 +52,13 @@ class Circle : public Shape
 class Square : public Shape
 {
 	public:
-		Square(double l) : _l(l) { }
+		Square(double s) : _s(s) { }
 		~Square() { }
-		double getArea() { return _l*_l; }
-		double getPerimeter() { return 4*_l; }
+		double getArea() { return _s*_s; }
+		double getPerimeter() { return 4*_s; }
 		string getType() { return "Square"; }
 	private:
-		double _l;
+		double _s;
 };
 
 
@@ -87,25 +87,19 @@ int main()
     else if(selection == 2){
       double b, h;
       cin >> b >> h;
-      // Add the rest of the code to allocate a new rectangle
-      //  and add it to the shapeList
-
+      shapeList.push_back(new Rectangle(b,h));
     }
     // Square case
     else if(selection == 3){
       double s;
       cin >> s;
-      // Add the rest of the code to allocate a new square
-      //  and add it to the shapeList
-
+      shapeList.push_back(new Square(s));
     }
     // Circle case
     else if(selection == 4){
       double r;
       cin >> r;
-      // Add the rest of the code to allocate a new circle
-      //  and add it to the shapeList
-
+      shapeList.push_back(new Circle(r));
     }
   }
 
