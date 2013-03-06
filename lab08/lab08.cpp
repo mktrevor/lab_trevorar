@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+#include <cstdlib>
 using namespace std;
 
 // Linked list item struct
@@ -26,7 +27,7 @@ int arraySequentialSearch( int value ) {
 }
 
 Item *linkedSequentialSearch( int value ) {
-  //An linked-list-based sequential search algorithm. Returns a pointer to the item
+  //A linked-list-based sequential search algorithm. Returns a pointer to the item
   //containing the value if found and a null otherwise
   Item *current = head;
 
@@ -75,8 +76,8 @@ int arrayBinarySearch( int value ) {
 // between 0 and 1,000,000 and insert them in sorted order
 void populateLinkedList() {
   //Appends MAXSIZE even numbers in the list
-  Item *temp, *last;
-
+  Item *temp, *last, *temp2, *trailer;
+  
   //Create the first item so that in the for loop we don't
   //have to check for head == NULL
   head = new Item;
@@ -84,12 +85,26 @@ void populateLinkedList() {
   head->next = NULL;
   last = head;
 
-  for ( int i=1; i<MAXSIZE; i++ ) {
+  for ( int i=1; i < MAXSIZE; i++ ) {
     temp = new Item;
-    temp->value = 2*MAXSIZE-i*2;
+    temp->value = rand()%(1000000);
     temp->next = NULL;
-    last->next = temp; //This is where we actually add the new item on the end of the list
-    last = temp;       //Now move last to point to the new last item in the list
+    if(temp->value < head->value) {
+    	temp->next = head->next;
+   		head = temp;
+    }
+    else if(temp->value > last->value) {
+    	last->next = temp;
+    	last = temp;
+    }
+    else {
+    	temp2 = head;
+    	while(temp2->next->value < temp->value) {
+    		temp2 = temp2->next; 	
+    	}
+    	temp->next = temp2->next;
+    	temp2->next = temp;
+    }
   }
 }
 
@@ -99,34 +114,54 @@ void populateLinkedList() {
 void populateArrayList() {
   //Puts MAXSIZE even numbers in the list
   for ( int i=0; i<MAXSIZE; i++ ) {
-    list[i] = 2*MAXSIZE-i*2;
+    list[i] = rand()%(1000000);
   }
 }
 
 // **************** WRITE ME ************************
 // Add your code (function(s)) to implement Selection Sort
-
-
-
+void selectionSort() {
+	for(int i = 0; i < MAXSIZE; i++) {
+		int temp1 = 0;
+		int temp2 = list[i];
+		int min = list[i];
+		for(int j = i + 1; j < MAXSIZE; j++) {
+			if(list[j] < min) {
+				min = list[j];
+				temp1 = j;
+			}
+		}
+		list[i] = min;
+		list[temp1] = temp2;
+	}
+}
 
 // **************** WRITE ME ************************
 // Add your code (function(s)) to implement Merge Sort
+
+
+
+
 int other[MAXSIZE];
 
 
 int main() {
+	
   clock_t start, finish;
   double  duration;
   cout << "List size of " << MAXSIZE << endl;
-
+	
+	// Setting the state of rand to a new value
+	srand(time(NULL));
+	
   //Put data into the two types of lists
   populateArrayList();
-  populateLinkedList();
+  //populateLinkedList();
 
   start = clock();
 
   // Add your call to either selection or merge sort here.
-
+	selectionSort();
 
 
   finish = clock();
@@ -136,9 +171,12 @@ int main() {
   // Write a for loop to check that data in your array is 
   // in sorted order
 
-
-
-
+	for(int i = 0; i < MAXSIZE - 1; i++) {
+		if(list[i+1] < list[i]) {
+			cout << i+1 << " " << list[i+1] << endl << i << " " << list[i] << endl;
+			cout << "LIST NOT IN ORDER" << endl;
+		}
+	}
 
 
 
