@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <cmath>
 using namespace std;
 
 // Linked list item struct
@@ -106,6 +107,16 @@ void populateLinkedList() {
     	temp2->next = temp;
     }
   }
+  
+//The following loop will check to see if linked list is in order
+  /*Item* temp3;
+  temp3 = head;
+  for(int i = 0; i < MAXSIZE - 1; i++) {
+  	if(temp3->value > temp3->next->value) {
+  		cout << i << ": Items not in order." << endl;
+  	}
+  	temp3 = temp3->next;
+  }*/
 }
 
 // **************** CHANGE ME ************************
@@ -138,12 +149,46 @@ void selectionSort() {
 
 // **************** WRITE ME ************************
 // Add your code (function(s)) to implement Merge Sort
+void merge(int* input, int left, int right) {
+	int mid = (left+right)/2;
+	
+	int x = 0;
+	int y = left;
+	int z = mid + 1;
+	
+	int temp[right - left + 1];
+	
+	while(y <= mid && z <= right) {
+		if(input[y] < input[z]) {
+			temp[x++] = input[y++];
+		}	else {
+			temp[x++] = input[z++];
+		}
+	}
+	
+	while(y <= mid) {
+		temp[x++] = input[y++];
+	}
+	
+	while(z <= right) {
+		temp[x++] = input[z++];
+	}
+	
+	for(int i = left; i <= right; i++) {
+		input[i] = temp[i-left];
+	}
+}
 
-
-
+void mergeSort(int* input, int left, int right) {
+	if(left < right) {
+		int mid = (left + right)/2;
+		mergeSort(input, left, mid);
+		mergeSort(input, mid + 1, right);
+		merge(input, left, right);
+	}
+}
 
 int other[MAXSIZE];
-
 
 int main() {
 	
@@ -161,7 +206,11 @@ int main() {
   start = clock();
 
   // Add your call to either selection or merge sort here.
-	selectionSort();
+	
+	//selectionSort();
+	mergeSort(list, 0, 49999);
+	
+	cout << "Done sorting." << endl;
 
 
   finish = clock();
@@ -173,12 +222,10 @@ int main() {
 
 	for(int i = 0; i < MAXSIZE - 1; i++) {
 		if(list[i+1] < list[i]) {
-			cout << i+1 << " " << list[i+1] << endl << i << " " << list[i] << endl;
-			cout << "LIST NOT IN ORDER" << endl;
+			cout << "ITEMS NOT IN ORDER" << endl;
+			cout << i << ": " << list[i] << endl << i+1 << ": " << list[i+1] << endl;
 		}
 	}
-
-
 
   //Let's start off with a value not in the list and see how long it takes.
   int numiters = 100000;
