@@ -122,17 +122,17 @@ void populateArrayList() {
 // Add your code (function(s)) to implement Selection Sort
 void selectionSort() {
 	for(int i = 0; i < MAXSIZE; i++) {
-		int temp1 = 0;
-		int temp2 = list[i];
+		int temp = list[i];
 		int min = list[i];
+		int minAddress = i;
 		for(int j = i + 1; j < MAXSIZE; j++) {
 			if(list[j] < min) {
 				min = list[j];
-				temp1 = j;
+				minAddress = j;
 			}
 		}
 		list[i] = min;
-		list[temp1] = temp2;
+		list[minAddress] = temp;
 	}
 }
 
@@ -156,7 +156,7 @@ int main() {
 	
   //Put data into the two types of lists
   populateArrayList();
-  //populateLinkedList();
+  populateLinkedList();
 
   start = clock();
 
