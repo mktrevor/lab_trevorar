@@ -28,10 +28,15 @@ private:
     QGraphicsScene *scene;
     QGraphicsView *view;
     QTimer *timer;
+    //QTimer *timer2;
     BouncingRectangle *item;
+    QPushButton *button;
+    //QList<BouncingRectangle*> rectangles;
 
 public slots:
     void handleTimer();
+    //void buttonPress();
+    //void addRectangle();
 
 };
 
