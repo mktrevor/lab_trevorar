@@ -7,7 +7,7 @@ void MainWindow::handleTimer() {
     }
 }
 
-/*void MainWindow::buttonPress() {
+void MainWindow::buttonPress() {
 		if(timer->isActive()) {
 			timer->stop();
 		} else {
@@ -19,9 +19,9 @@ void MainWindow::handleTimer() {
 		} else {
 			timer2->start();
 		}		
-}*/
+}
 
-/*void MainWindow::addRectangle() {
+void MainWindow::addRectangle() {
 		BouncingRectangle* newRectangle = new BouncingRectangle(rand()%250, rand()%250, 20.0, 20.0, rand()%6, rand()%6);
 		
 		QBrush redBrush(Qt::red);
@@ -51,7 +51,7 @@ void MainWindow::handleTimer() {
 	rectangles.push_back(newRectangle);
 	scene->addItem( newRectangle );
 			
-}*/
+}
 
 MainWindow::MainWindow()  {
     //We need a scene and a view to do graphics in QT
@@ -83,9 +83,9 @@ MainWindow::MainWindow()  {
     timer->setInterval(5);
     connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
     
-    /*timer2 = new QTimer(this);
+    timer2 = new QTimer(this);
     timer2->setInterval(250);
-    connect(timer2, SIGNAL(timeout()), this, SLOT(addRectangle()));*/
+    connect(timer2, SIGNAL(timeout()), this, SLOT(addRectangle()));
 
 }
 
@@ -94,7 +94,7 @@ void MainWindow::show() {
     //we call start
     timer->start();
     
-    //timer2->start();
+    timer2->start();
     
     //This is how we get our view displayed.
     view->show();
@@ -105,11 +105,11 @@ MainWindow::~MainWindow()
     timer->stop();
     timer2->stop();
     delete timer;
-    //delete timer2;
+    delete timer2;
     delete item;
-    /*for(int i = 0; i < rectangles.size(); i++) {
+    for(int i = 0; i < rectangles.size(); i++) {
     	delete rectangles[i];
-    }*/
+    }
     delete button;
     delete scene;
     delete view;
