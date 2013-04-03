@@ -48,11 +48,9 @@ MinArrayHeap<T>::MinArrayHeap(int *data, int size) :
   // Implement code that will convert the values in the items_
   // array/vector to a valid heap using calls to heapify()
   // Take care not to try to heapify the value at location 0
-
-
-
-
-
+	for(int i = items_.size() - 1; i > 0; i--) {
+		heapify(i);
+	}
 }
 
 template <typename T>
@@ -108,12 +106,23 @@ void MinArrayHeap<T>::heapify(int loc)
   // loc's children are both valid heaps but the value
   // at loc might be out of place, so make a valid heap
   // out of the item at loc and the subtree below it
-
-
-
-
-
-
+  if(loc * 2 >= items_.size()) { //If node is leaf node, return
+  	return;
+  }
+  
+	int minChild = loc * 2; //Left child node first
+	if(loc * 2 + 1 < items_.size()) {
+		int otherChild = loc * 2 + 1; //Check other child node
+		
+		if(items_[otherChild] < items_[minChild]) {
+			minChild = otherChild;
+		}
+		
+		if(items_[loc] > items_[minChild]) {
+			swap(items_[loc], items_[minChild]);
+			heapify(minChild);
+		}
+	}
 }
 
 template <typename T>
