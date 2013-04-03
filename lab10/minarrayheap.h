@@ -23,6 +23,7 @@ class MinArrayHeap : public MinHeap<T>
    int size() const;
    bool empty() const;
    void printHeap() const;
+   bool decreaseKey(const T& val, const T& newVal);
  private: // member functions
    /// heapify is called rebuildHeap() in the textbook
    void heapify(int loc);
@@ -64,11 +65,14 @@ void MinArrayHeap<T>::push(const T& item)
   
   //***************** Complete me ***********************
   // Now move it into the right location to make a valid heap
-
-
-
-
-
+	int index = items_.size() - 1;
+	
+	while((index / 2 >= 1) && (items_[index] < items_[index / 2])) {	
+		
+		swap(items_[index], items_[index / 2]);
+		
+		index /= 2;
+	}
 }
 
 template <typename T>
@@ -124,7 +128,6 @@ void MinArrayHeap<T>::heapify(int loc)
 		swap(items_[loc], items_[minChild]);
 		heapify(minChild);
 	}
-	
 }
 
 template <typename T>
@@ -134,9 +137,27 @@ void MinArrayHeap<T>::printHeap() const
   for(unsigned int i=1; i < items_.size(); i++){
     std::cout << i << ": " << items_[i] << std::endl;
   }
-
 }
 
-
+template <typename T>
+bool MinArrayHeap<T>::decreaseKey(const T& val, const T& newVal)
+{
+	int index = 0;
+	for(int i = 0; i < items_.size(); i++) {
+		if(items_[i] == val) {
+			index = i;
+			break;
+		}
+	}
+	if(index != 0) {
+		items_[index] = newVal;
+		while((index / 2 >= 1) && (items_[index] < items_[index / 2])) {	
+			swap(items_[index], items_[index / 2]);
+			index /= 2;
+		}
+		return 1;
+	}
+	return 0;
+}
 
 #endif
