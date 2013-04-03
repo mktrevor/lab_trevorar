@@ -37,9 +37,12 @@ int main(int argc, char* argv[])
   MinArrayHeap<int> h(data, size);
 
   // Eventually add some pushes here
-
-
-
+  
+  h.push(1);
+  h.push(MAXVAL/2);
+  h.push(MAXVAL);
+  
+  h.decreaseKey(MAXVAL,45);
 
   cout << "Heap contents as they are popped: " << endl;
   while( !h.empty() ){

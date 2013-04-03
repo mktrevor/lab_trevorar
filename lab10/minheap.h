@@ -9,6 +9,7 @@ class MinHeap
    virtual void pop() = 0;
    virtual int size() const = 0;
    virtual bool empty() const = 0;
+   virtual bool decreaseKey(const T& val, const T& newVal) = 0;
 };
 
 #endif
