@@ -48,7 +48,8 @@ MinArrayHeap<T>::MinArrayHeap(int *data, int size) :
   // Implement code that will convert the values in the items_
   // array/vector to a valid heap using calls to heapify()
   // Take care not to try to heapify the value at location 0
-	for(int i = items_.size() - 1; i > 0; i--) {
+	
+	for(int i = items_.size() / 2; i > 0; i--) {
 		heapify(i);
 	}
 }
@@ -58,7 +59,7 @@ void MinArrayHeap<T>::push(const T& item)
 {
   // New data always gets put at the next empty location
   // in the heap (which is always the end of the array)
-  // and then we'll move it to its correct heap locaiton
+  // and then we'll move it to its correct heap location
   items_.push_back(item);
   
   //***************** Complete me ***********************
@@ -117,12 +118,13 @@ void MinArrayHeap<T>::heapify(int loc)
 		if(items_[otherChild] < items_[minChild]) {
 			minChild = otherChild;
 		}
-		
-		if(items_[loc] > items_[minChild]) {
-			swap(items_[loc], items_[minChild]);
-			heapify(minChild);
-		}
 	}
+		
+	if(items_[loc] > items_[minChild]) {
+		swap(items_[loc], items_[minChild]);
+		heapify(minChild);
+	}
+	
 }
 
 template <typename T>
