@@ -49,6 +49,17 @@ int main(int argc, char* argv[]) {
 	cout << tree.find(8) << endl;
 	cout << tree.find(11) << endl;
 	cout << tree.size() << endl;*/
+	
+	//Code for part 3
+	cout << tree.empty() << endl;
+	cout << tree.size() << endl;
+	cout << tree.find(20) << endl;
+	cout << tree.find(17) << endl;
+	cout << tree.find(22) << endl;
+	cout << tree.find(13) << endl;
+	cout << tree.find(27) << endl;
+	cout << tree.find(10) << endl;
+	cout << tree.size() << endl;
 
 	return 0;
 }
