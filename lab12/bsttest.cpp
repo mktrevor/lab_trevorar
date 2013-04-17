@@ -14,6 +14,14 @@ int main(int argc, char* argv[]) {
 	
 	BSTree<int> tree;
 	
+	//Code for part 1
+	/*tree.find(55);
+	tree.empty();
+	tree.size();
+	tree.inOrderPrintTraversal();
+	tree.preOrderPrintTraversal();
+	*/
+	
 	ifstream inputFile(argv[1]);
 	
 	if(!inputFile.is_open()) {
@@ -28,7 +36,19 @@ int main(int argc, char* argv[]) {
 		tree.preOrderPrintTraversal();
 	}
 	
+	cout << "Done: " << endl;
+	
 	tree.inOrderPrintTraversal();
+	
+	//Code for part 2
+	/*cout << tree.empty() << endl;
+	cout << tree.size() << endl;
+	cout << tree.find(2) << endl;
+	cout << tree.find(7) << endl;
+	cout << tree.find(20) << endl;
+	cout << tree.find(8) << endl;
+	cout << tree.find(11) << endl;
+	cout << tree.size() << endl;*/
 
 	return 0;
 }
