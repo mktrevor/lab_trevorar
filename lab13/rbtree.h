@@ -6,39 +6,39 @@
 template <typename T>
 struct Node {
 	T val_;
-	Node<T> *left_;
-	Node<T> *right_;
-	Node<T> *parent_;
+	Node<T> *left;
+	Node<T> *right;
+	Node<T> *parent;
 	bool red;
 };
 
 template <typename T>
 void inOrderPrint(Node<T>* node) {
-	if(node->left_ == NULL && node->right_ == NULL) { 
+	if(node->left == NULL && node->right == NULL) { 
 		std::cout << node->val_ << std::endl;
 		return;
 	}
-	if(node->left_ != NULL) {
-		inOrderPrint(node->left_);
+	if(node->left != NULL) {
+		inOrderPrint(node->left);
 	}
 	std::cout << node->val_ << std::endl;
-	if(node->right_ != NULL) {
-		inOrderPrint(node->right_);	
+	if(node->right != NULL) {
+		inOrderPrint(node->right);	
 	}
 }
 
 template <typename T>
 void preOrderPrint(Node<T>* node) {
-	if(node->left_ == NULL && node->right_ == NULL) {
+	if(node->left == NULL && node->right == NULL) {
 		std::cout << node->val_ << std::endl;
 		return;
 	}
 	std::cout << node->val_ << std::endl;
-	if(node->left_ != NULL) {
-		preOrderPrint(node->left_);
+	if(node->left != NULL) {
+		preOrderPrint(node->left);
 	}
-	if(node->right_ != NULL) {
-		preOrderPrint(node->right_);	
+	if(node->right != NULL) {
+		preOrderPrint(node->right);	
 	}
 }
 
@@ -58,6 +58,13 @@ class RBTree {
 	private:
 		Node<T> *root_;
 		int size_;
+		Node<T>* uncle(Node<T>* node);
+		Node<T>* grandparent(Node<T>* node);
+		bool leftChild(Node<T>* node);
+		bool rightChild(Node<T>* node);
+		void rightRotate(Node<T>* node);
+		void leftRotate(Node<T>* node);
+		void fixTree(Node<T>* node);
 };
 
 template <typename T>
@@ -84,11 +91,11 @@ Node<T>* RBTree<T>::find(const T& val) {
 			return temp;
 		}
 		else if(temp->val_ < val) {
-			temp = temp->right_;
+			temp = temp->right;
 			continue;
 		}
 		else {
-			temp = temp->left_;
+			temp = temp->left;
 			continue;
 		}
 	}
@@ -108,9 +115,9 @@ template <typename T>
 void RBTree<T>::insert(const T& val) {
 	Node<T> *newNode = new Node<T>;
 	newNode->val_ = val;
-	newNode->left_ = NULL;
-	newNode->right_ = NULL;
-	newNode->parent_ = NULL;
+	newNode->left = NULL;
+	newNode->right = NULL;
+	newNode->parent = NULL;
 	newNode->red = 1;
 	
 	if(root_ == NULL) {
@@ -123,29 +130,29 @@ void RBTree<T>::insert(const T& val) {
 	
 	while(true) {
 		if(newNode->val_ > temp->val_) {
-			if(temp->right_ == NULL) {
-				temp->right_ = newNode;
-				newNode->parent_ = temp;
+			if(temp->right == NULL) {
+				temp->right = newNode;
+				newNode->parent = temp;
 				size_++;
 				return;
 			} else {
-				temp = temp->right_;
+				temp = temp->right;
 				continue;
 			}
 		}
 		else if(newNode->val_ < temp->val_) {
-			if(temp->left_ == NULL) {
-				temp->left_ = newNode;
-				newNode->parent_ = temp;
+			if(temp->left == NULL) {
+				temp->left = newNode;
+				newNode->parent = temp;
 				size_++;
 				return;
 			} else {
-				temp = temp->left_;
+				temp = temp->left;
 				continue;
 			}
 		}
 	}
-	if(newNode->parent_->red == 0) {
+	if(newNode->parent->red == 0) {
 		return;
 	} else {
 		fixTree(newNode);
@@ -169,6 +176,136 @@ void RBTree<T>::preOrderPrintTraversal() {
 		return;
 	}
 	preOrderPrint(root_);
+}
+
+template <typename T>
+bool RBTree<T>::leftChild(Node<T>* node) {
+	if(node == root_) {
+		return 0;
+	}
+	return (node->parent->left == node);
+}
+
+template <typename T>
+bool RBTree<T>::rightChild(Node<T>* node) {
+	if(node == root_) {
+		return 0;
+	}
+	return (node->parent->right == node);
+}
+
+template <typename T>
+Node<T>* RBTree<T>::grandparent(Node<T>* node) {
+	if(node != NULL && node->parent != NULL) {
+		return node->parent->parent;
+	} else { return NULL; }
+}
+
+template <typename T>
+Node<T>* RBTree<T>::uncle(Node<T>* node) {
+	Node<T>* g = grandparent(node);
+	
+	if(g == NULL) {
+		return NULL;
+	} 
+	if(leftChild(node->parent)) {
+		return g->right;
+	} else {
+		return g->left;
+	}	
+}
+
+template <typename T>
+void RBTree<T>::rightRotate(Node<T>* node) {
+	Node<T>* xNode = node;
+	Node<T>* yNode = node->parent;
+	
+	if(leftChild(yNode)) {
+		yNode->parent->left = xNode;
+	} else if(rightChild(yNode)) {
+		yNode->parent->right = xNode;
+	}
+	
+	if(xNode->right != NULL) {
+		yNode->left = xNode->right;
+		xNode->right->parent = yNode;
+	}
+	
+	if(yNode == root_) {
+		root_ = xNode;
+		yNode->parent = xNode;
+	} else {
+		xNode->parent = yNode->parent;
+		yNode->parent = xNode;
+	}
+	
+	xNode->right = yNode;	
+}
+
+template <typename T>
+void RBTree<T>::leftRotate(Node<T>* node) {
+	Node<T>* yNode = node;
+	Node<T>* xNode = node->parent;
+	
+	if(leftChild(xNode)) {
+		xNode->parent->left = yNode;
+	} else if(rightChild(xNode)) {
+		xNode->parent->right = yNode;
+	}
+	
+	if(yNode->left != NULL) {
+		xNode->right = yNode->left;
+		yNode->left->parent = xNode;
+	}
+	
+	if(xNode == root_) {
+		root_ = yNode;
+		xNode->parent = yNode;
+	} else {
+		yNode->parent = xNode->parent;
+		xNode->parent = yNode;
+	}
+	
+	yNode->left = xNode;	
+}
+
+
+
+template <typename T>
+void RBTree<T>::fixTree(Node<T>* node) {
+	if(node->parent == NULL) {
+		node->red == 0;
+		return;
+	}
+	if(node->parent->red == 0) {
+		return;
+	}
+
+	Node<T> *u = uncle(node);
+	Node<T> *g = grandparent(node);
+
+	if(u != NULL && u->red == 1) {
+		node->parent->red = 0;
+		u->red = 0;
+		g->red = 1;
+		fixTree(g);
+	}
+	if(rightChild(node) && leftChild(node->parent)) {
+		leftRotate(node->parent);
+		node = node->left;
+	} else if(leftChild(node) && rightChild(node->parent)) {
+		rightRotate(node->parent);
+		node = node->right;
+	}
+	
+	g = grandparent(node);
+	node->parent->red = 0;
+	g->red = 1;
+	if(leftChild(node)) {
+		rightRotate(g);
+	} else {
+		leftRotate(g);
+	}
 }
 
 #endif
