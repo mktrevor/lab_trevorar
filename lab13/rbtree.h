@@ -17,14 +17,12 @@ void inOrderPrint(Node<T>* node) {
 	
 	if(node->left == NULL && node->right == NULL) { 
 		std::cout << node->val_ << std::endl;
-		std::cout << "RED: " << node->red << std::endl;
 		return;
 	}
 	if(node->left != NULL) {
 		inOrderPrint(node->left);
 	}
 	std::cout << node->val_ << std::endl;
-	std::cout << "RED: " << node->red << std::endl;
 	if(node->right != NULL) {
 		inOrderPrint(node->right);	
 	}
